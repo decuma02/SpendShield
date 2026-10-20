@@ -744,17 +744,42 @@ DEMO_SCENARIOS = [
 
 ---
 
-### TASK-026: README (Day 1 / updated Day 24)
-**Priority:** P1  
+### TASK-026: README & Hackathon Submission Package (Day 24)
+**Priority:** P0  
 **File location:** `README.md`
 
 **Minimum content:**
 - Project name and one-line description.
+- Hackathon submission checklist (Repo, README, Docker, single-command test, live URLs, demo video).
+- OmniRush reproducibility instructions.
 - Link to each planning document.
 - Quick start (local development commands for backend and frontend).
 - Environment variable setup instructions.
 - How to run the demo.
-- Link to deployed URLs (filled in on Day 23).
+- Link to deployed URLs (Render backend + Vercel frontend).
+
+---
+
+### TASK-027: Dockerfile, docker-compose, and Single-Command Test Suite (OmniRush Category)
+**Priority:** P0  
+**Depends on:** TASK-001, TASK-014, TASK-022  
+**File locations:**
+- `Dockerfile` (or `backend/Dockerfile` and `frontend/Dockerfile`)
+- `docker-compose.yml`
+- `scripts/test.sh`
+- `scripts/test.bat`
+
+**What to build:**
+- Multi-stage Docker build with pinned dependencies for backend and frontend.
+- `docker-compose.yml` defining `backend`, `frontend`, and a `test` runner service.
+- Single command execution: `docker compose up --build`.
+- Single command test execution: `./scripts/test.sh` (or `docker compose run test`), running backend unit tests, policy engine tests, ML inference tests, and concurrency tests.
+
+**Acceptance criteria:**
+- `docker compose up --build` brings up backend and frontend without manual intervention.
+- `./scripts/test.sh` runs all tests and exits with code 0.
+- All dependencies are pinned with exact versions.
+
 
 ---
 

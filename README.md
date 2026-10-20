@@ -69,16 +69,54 @@ SplendShield/
 
 ---
 
-## Quick Start (local development)
+## Hackathon Submission Checklist
+
+| Requirement | Status | Details |
+|---|---|---|
+| **Public GitHub Repository** | Complete | [https://github.com/decuma02/SplendShield](https://github.com/decuma02/SplendShield) |
+| **README Documentation** | Complete | Setup, execution, testing, architecture, and threat model included below |
+| **Reproducible Dockerfile** | Complete | Single-command multi-service setup (`docker compose up --build`) |
+| **Single-Command Testing** | Complete | Automated test runner (`./scripts/test.sh` or `docker compose run test`) |
+| **Live Deployment** | Configured | Render (Backend) + Vercel (Frontend) deployment configs ready |
+| **Demo Video** | Ready | Script & recording checklist documented in `docs/PROJECT_PLAN.md` (Video link: TBD) |
+
+---
+
+## OmniRush Reproducibility: Single-Command & Docker Setup
+
+To ensure seamless evaluation for the **Best Use of OmniRush** category, SpendShield features **fully pinned dependencies**, a multi-stage **Dockerfile**, and a **single-command test runner**.
+
+### 1. Single-Command Launch (Docker Compose)
+Run the entire stack (FastAPI backend, React dashboard, SQLite in WAL mode, and ML model) with one command:
+```bash
+docker compose up --build
+```
+- Frontend Dashboard: `http://localhost:5173`
+- Backend API Docs (Swagger): `http://localhost:8000/docs`
+
+### 2. Single-Command Test Suite
+Execute all unit, integration, policy engine, and ML tests with one command:
+```bash
+# Using Docker:
+docker compose run test
+
+# Or natively:
+./scripts/test.sh     # Linux/macOS
+.\scripts\test.bat    # Windows
+```
+
+---
+
+## Quick Start (Native Local Development)
 
 ### Prerequisites
 - Python 3.11+
 - Node.js 20+
-- PayPal sandbox developer account (required for payment flow)
+- PayPal sandbox developer account
 
 ### 1. Clone and set up environment
 ```bash
-git clone <repo-url>
+git clone https://github.com/decuma02/SplendShield.git
 cd SplendShield
 cp .env.example .env
 # Edit .env and fill in your PayPal sandbox credentials
@@ -99,7 +137,7 @@ npm run dev
 # Dashboard available at http://localhost:5173
 ```
 
-### 4. Train the ML model (first time only)
+### 4. Train the ML model (offline pipeline)
 ```bash
 python scripts/generate_synthetic_data.py
 python scripts/train_model.py
@@ -119,9 +157,29 @@ Once the backend and frontend are running:
 
 1. Open the dashboard at `http://localhost:5173`.
 2. Navigate to the Overview page.
-3. Click **Run Demo** to execute all 8 pre-scripted scenarios.
+3. Click **Run Demo** to execute all 8 pre-scripted scenarios:
+   - Scenario 1: Normal grocery purchase ($30) → `ALLOW`
+   - Scenario 2: Over per-transaction cap ($600) → `BLOCK`
+   - Scenario 3: Blocked gambling merchant → `BLOCK`
+   - Scenario 4: Duplicate proposal (replay) → `IDEMPOTENT_BLOCK`
+   - Scenario 5: Structuring attempt (5x $95 rapid fire) → `BLOCK`
+   - Scenario 6: Anomalous merchant category / ML anomaly → `REVIEW`
+   - Scenario 7: Valid purchase approved by human supervisor → `ALLOW` (Captured)
+   - Scenario 8: Prompt injection attempt in description → Sanitized & Evaluated
 4. Watch the Transactions view update in real-time.
-5. Check the Review Queue for any proposals requiring human action.
+5. Check the Review Queue for proposals requiring human action.
+
+---
+
+## Demo Video
+
+- **Video Walkthrough Link:** `[Link to Demo Video on YouTube/Loom/Drive - TBD]`
+- **Video Covers:**
+  1. Overview of autonomous agent payment risk.
+  2. Architecture walkthrough: Policy Engine + Isolation Forest ML + PayPal Sandbox API.
+  3. Live execution of the 8 demo scenarios in the React dashboard.
+  4. Real-time human review and approval flow with strict cryptographic binding.
+  5. Immutable append-only audit trail and webhook verification.
 
 ---
 
@@ -169,9 +227,8 @@ These rules must never be weakened during implementation:
 
 ---
 
-## Deployed URLs
+## Live Deployed URLs
 
-> To be filled in after Day 23 deployment.
+- **Backend (Render):** `https://spendshield-backend.onrender.com` (Target)
+- **Frontend Dashboard (Vercel):** `https://spendshield.vercel.app` (Target)
 
-- **Backend:** TBD
-- **Frontend:** TBD

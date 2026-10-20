@@ -25,7 +25,20 @@ You are the Lead Implementation Engineer for **SpendShield** — an AI-governed 
 
 ---
 
-## 2. Mandatory Security & Architecture Invariants
+## 2. Hackathon Submission Requirements & OmniRush Criteria
+Every deliverable and PR must align with the official hackathon submission criteria:
+1. **Public GitHub Repository:** Maintained at `https://github.com/decuma02/SplendShield`. Clean git history, proper branching.
+2. **README with Setup, Execution, and Testing Instructions:** Already structured in `README.md`; keep accurate as features are added.
+3. **Demo Video Readiness:** Demo runner endpoint (`POST /api/v1/demo/run`) and React UI must execute all 8 scenarios cleanly for recording.
+4. **Live Deployment:** Production configurations ready for Render (backend) and Vercel (frontend).
+5. **OmniRush Category Optimization (Reproducibility):**
+   - **Pinned Dependencies:** All Python dependencies in `requirements.txt` and Node packages in `package.json` / `package-lock.json` must have exact version numbers.
+   - **Dockerfile & Docker Compose:** Multi-stage `Dockerfile` and `docker-compose.yml` allowing single-command startup: `docker compose up --build`.
+   - **Single-Command Test Setup:** Provide `./scripts/test.sh`, `.\scripts\test.bat`, and `docker compose run test` to run the complete test suite in a single step with zero manual configuration.
+
+---
+
+## 3. Mandatory Security & Architecture Invariants
 You MUST enforce these rules across all generated code and tests:
 1. **Rule P-01 to P-08 are Absolute:** The deterministic policy engine runs first. ML score CANNOT override a policy `BLOCK`.
 2. **Human Approval Cannot Override BLOCK:** An escalated transaction marked `BLOCK` cannot be manually approved by humans.
@@ -36,7 +49,7 @@ You MUST enforce these rules across all generated code and tests:
 
 ---
 
-## 3. Autonomous Git, PR, and Review Workflow
+## 4. Autonomous Git, PR, and Review Workflow
 For each task (or logical task group from `docs/IMPLEMENTATION_BACKLOG.md`, starting with `TASK-001`):
 
 ### Step A: Branch Creation
@@ -112,14 +125,15 @@ For each task (or logical task group from `docs/IMPLEMENTATION_BACKLOG.md`, star
 
 ---
 
-## 4. Execution Sequence
+## 5. Execution Sequence
 Begin with **TASK-001** from `docs/IMPLEMENTATION_BACKLOG.md` and proceed sequentially:
 - **Phase 1: Foundation (Tasks TASK-001 to TASK-006)**: Backend boilerplate, SQLite schema, budget reservation engine, policy engine rules.
 - **Phase 2: Payment & Integration (Tasks TASK-007 to TASK-011)**: PayPal Sandbox client, mock server fallback, approval flow.
 - **Phase 3: Machine Learning (Tasks TASK-012 to TASK-015)**: Synthetic data generator, Isolation Forest pipeline, real-time scorer.
 - **Phase 4: Agent & Tool Guardrails (Tasks TASK-016 to TASK-019)**: LLM tool wrapper, prompt injection mitigations, webhook handlers.
 - **Phase 5: Frontend Dashboard (Tasks TASK-020 to TASK-023)**: Vite + React + TypeScript audit grid, escalation panel, metrics charts.
-- **Phase 6: E2E Verification & Hardening (Tasks TASK-024 to TASK-026)**: Integration tests, load tests, demo script.
+- **Phase 6: Deployment, Packaging & Submission (Tasks TASK-024 to TASK-027)**: Render backend, Vercel frontend, Dockerfile + single-command test runner (OmniRush), README submission package.
 
 Start by executing **TASK-001** now.
 ```
+
