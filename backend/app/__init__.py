@@ -1,0 +1,1 @@
+"""SpendShield backend application package."""
